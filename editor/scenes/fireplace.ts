@@ -5,8 +5,8 @@ import type { SceneContext } from './types';
 
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene),
-      assets = sceneAssets(scene);
+    ground(scene);
+    const assets = sceneAssets(scene);
     const wallGeometry = new BoxGeometry(12, 6, 0.25);
     const uv = wallGeometry.getAttribute('uv');
     for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * 6, uv.getY(i) * 3);
@@ -29,6 +29,6 @@ export const recipe = {
     for (const x of [-0.8, 0.8]) box(scene, [0.06, 0.28, 1], [x, 0.36, -0.2], '#535457', 1);
     for (let i = 0; i < 9; i++)
       box(scene, [0.04, 0.05, 1], [-0.8 + i * 0.2, 0.38, -0.2], '#444749', 1);
-    return { objects: { left, right, mantel }, ground: floor.control };
+    return { objects: { left, right, mantel } };
   },
 };

@@ -5,11 +5,7 @@
   "name": "Colored fire",
   "scene": {
     "recipe": "magical-fire",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [5.5, 4.2, 7],
@@ -17,7 +13,8 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.0391,
+    "voxelSize": 0.05,
+    "smokeDivisor": 2,
     "flame": {
       "lifespan": 0.8,
       "heatRate": 3.5,
@@ -26,7 +23,7 @@
       "cooling": 0.62,
       "color": "#8c74ff",
       "brightness": 2.4,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 3600,
       "sootGlow": 0.8
     },
@@ -49,7 +46,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "raySteps": 256
+      "filter": "quadratic",
+      "raySteps": 128
     }
   },
   "emitters": [

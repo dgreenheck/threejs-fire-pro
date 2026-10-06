@@ -4,7 +4,7 @@ import type { SceneContext } from './types';
 
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene);
+    ground(scene);
     cylinder(scene, 1.25, 0.15, [0, 0.075, 0], '#48515a', 0.5);
     ring(scene, 1.05, 0.025, 0.16, '#69858d');
     cylinder(scene, 0.15, 0.28, [0, 0.29, 0], '#6c747a', 0.7);
@@ -16,6 +16,6 @@ export const recipe = {
       const a = (i * Math.PI) / 6;
       cylinder(scene, 0.025, 0.025, [Math.cos(a) * 1.13, 0.16, Math.sin(a) * 1.13], '#a8a9aa', 1);
     }
-    return { objects: {}, ground: floor.control };
+    return { objects: {} };
   },
 };

@@ -3,8 +3,8 @@ import { sceneAssets } from './props';
 import type { SceneContext } from './types';
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene),
-      assets = sceneAssets(scene);
+    ground(scene);
+    const assets = sceneAssets(scene);
     for (let i = 0; i < 15; i++) {
       const angle = (i / 15) * Math.PI * 2;
       const rock = assets.model('rock', [0.65, 0.3, 0.5]);
@@ -12,6 +12,6 @@ export const recipe = {
       rock.rotation.y = angle;
       scene.add(rock);
     }
-    return { objects: {}, ground: floor.control };
+    return { objects: {} };
   },
 };

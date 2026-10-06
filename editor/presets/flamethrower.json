@@ -5,11 +5,7 @@
   "name": "Flamethrower",
   "scene": {
     "recipe": "flamethrower",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [7, 5.2, 10],
@@ -17,7 +13,8 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.0625,
+    "voxelSize": 0.05,
+    "smokeDivisor": 2,
     "flame": {
       "lifespan": 1.4,
       "heatRate": 5,
@@ -26,7 +23,7 @@
       "cooling": 0.62,
       "color": "#ffffff",
       "brightness": 1.4,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 3200,
       "sootGlow": 1
     },
@@ -54,7 +51,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "raySteps": 256
+      "filter": "quadratic",
+      "raySteps": 128
     }
   },
   "emitters": [

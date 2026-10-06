@@ -8,17 +8,16 @@ import { recipe as delayed } from './scenes/delayed-ignition';
 import { recipe as smoke } from './scenes/industrial-smoke';
 import { recipe as flamethrower } from './scenes/flamethrower';
 import { recipe as tornado } from './scenes/fire-tornado';
-import { recipe as burstStage } from './scenes/burst-stage';
 import type { Recipe } from './document';
 import type { DemoScene, SceneContext } from './scenes/types';
 const empty = {
   buildScene({ scene }: SceneContext): DemoScene {
-    return { objects: {}, ground: ground(scene).control };
+    ground(scene);
+    return { objects: {} };
   },
 };
 export const recipes: Record<Recipe, { buildScene(ctx: SceneContext): DemoScene }> = {
   empty,
-  'emitter-forces': empty,
   'flaming-letters': letters,
   fireplace,
   campfire,
@@ -28,6 +27,6 @@ export const recipes: Record<Recipe, { buildScene(ctx: SceneContext): DemoScene 
   'magical-fire': magic,
   'delayed-ignition': delayed,
   'industrial-smoke': smoke,
-  'fuel-fireball': burstStage,
+  'fuel-fireball': empty,
   'moving-emitter': empty,
 };

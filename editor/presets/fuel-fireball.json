@@ -5,25 +5,21 @@
   "name": "Fireball",
   "scene": {
     "recipe": "fuel-fireball",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
-    "position": [15.958918081078448, 10.092819587526966, 17.27981479948027],
-    "target": [-1.9432696295238256, 7.744762471761973, 0.6363663617029404]
+    "position": [6.875, 3.75, 8.75],
+    "target": [0, 3, 0]
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.054,
+    "voxelSize": 0.05,
     "velocityDivisor": 2,
-    "smokeDivisor": 1,
+    "smokeDivisor": 2,
     "seed": 1,
     "grid": {
       "maxVoxels": 8000000,
-      "cutoff": 0.02,
+      "cutoff": 0.05,
       "ground": true
     },
     "flame": {
@@ -34,7 +30,7 @@
       "cooling": 0.26,
       "color": "#ffffff",
       "brightness": 15,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 2630,
       "sootGlow": 5
     },
@@ -62,8 +58,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "filter": "trilinear",
-      "raySteps": 256,
+      "filter": "quadratic",
+      "raySteps": 128,
       "halfResolution": true
     }
   },
@@ -72,7 +68,7 @@
       "id": "d9d5370a-e64e-4d57-b707-9b5796b29df1",
       "name": "Fireball charge",
       "shape": "sphere",
-      "radius": 0.85,
+      "radius": 0.5,
       "size": [1, 1, 1],
       "position": [0, 1.55, 0],
       "rotation": [0, 0, 0],

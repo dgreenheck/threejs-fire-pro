@@ -64,12 +64,12 @@ standalone runtime that the editor's **Full app** export bundles.
 
 The editor has four areas:
 
-| Area                  | What it does                                                                                                                                                                                                       |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Presets** (left)    | Built-in effects, a blank **New simulation**, and presets you save yourself.                                                                                                                                       |
-| **Hierarchy**         | The simulation and its emitters, forces and colliders. Use **+** to add objects; each row's menu renames, duplicates or deletes it.                                                                                |
-| **Viewport** (center) | Orbit with the mouse. Click an emitter's wireframe guide to select it. The toolbar plays, pauses, restarts, undoes and redoes, switches move and rotate gizmos, shows the solver's bricks, and picks a debug view. |
-| **Inspector** (right) | Settings in tabs along its right edge: **Scene**, the simulation-wide tabs, and a tab for the selected emitter, force or collider. Hover a label for a short description.                                          |
+| Area                  | What it does                                                                                                                                                                                                                                   |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Presets** (left)    | Built-in effects, a blank **New simulation**, and presets you save yourself.                                                                                                                                                                   |
+| **Hierarchy**         | The simulation and its emitters, forces and colliders. Use **+** to add objects; each row's menu renames, duplicates or deletes it.                                                                                                            |
+| **Viewport** (center) | Orbit with the mouse. Click an emitter's wireframe guide to select it. The toolbar plays, pauses, restarts, undoes and redoes, switches move and rotate gizmos, shows the solver's bricks, turns the lights on or off, and picks a debug view. |
+| **Inspector** (right) | Settings in tabs along its right edge: the simulation-wide tabs, and a tab for the selected emitter, force or collider. Hover a label for a short description.                                                                                 |
 
 Your work is saved in the browser as a draft automatically. **Save preset** stores it in your
 preset list, **Import** opens an exported ZIP, `simulation.js` or `simulation.json`, and
@@ -86,7 +86,7 @@ are in meters, in world space, with the ground at `y = 0`.
 
 ```text
 Simulation document
-├── scene        preview world: built-in scene, sky, floor material
+├── scene        preview world: built-in scene and lights
 ├── camera       starting camera position and target
 ├── simulation   grid, flame, smoke, motion, fuel, lighting and rendering settings
 ├── emitters[]   continuous sources and bursts
@@ -98,25 +98,24 @@ Simulation document
 
 The scene is the world around the effect. Each built-in preset has its own scene (a campfire
 ring, a fireplace, a flamethrower nozzle, …), and **New simulation** starts with an empty floor.
-The inspector's **Scene** tab turns the **Sky and sun** on or off and sets the **Floor**'s
-roughness and metalness. Scene settings don't change the simulation; they only change what it
-is shown against. Some built-in scenes also add behavior, like the flamethrower's sweeping
+The **Lights** button at the top right of the viewport turns the sky, sun and fill lights on or
+off; the editor remembers your choice, except that smoke-only presets always open lit. Lights
+don't change the simulation; they only change what it is shown against. Some built-in scenes also add behavior, like the flamethrower's sweeping
 nozzle or the projectile launcher, and their props act as colliders.
 
 ### Simulation settings
 
 The inspector's simulation tabs hold the settings that apply to the whole effect:
 
-| Tab            | Settings                                                                                                                                                                                     |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Simulation** | `voxelSize` (meters per cell), the voxel budget (`grid.maxVoxels`), the density `cutoff` below which cells are released, and a solid `ground`. Changing `voxelSize` restarts the simulation. |
-| **Motion**     | `buoyancy`, `smokeWeight`, `damping` and `vorticity`.                                                                                                                                        |
-| **Flame**      | Flame `lifespan`, the heat, smoke and expansion it produces, `cooling`, and its look: `color`, `brightness`, `opacity`, blackbody `temperature`, `sootGlow`.                                 |
-| **Smoke**      | `dissipation`, `color`, `density`, `scattering` and `shadowDensity`.                                                                                                                         |
-| **Fuel**       | Optional combustion: fuel the flow carries, which ignites above `ignitionHeat` and burns at `burnRate`.                                                                                      |
-| **Lighting**   | Whether flames light the scene (`illuminateScene`) and how strongly.                                                                                                                         |
-| **Rendering**  | Reconstruction `filter`, `raySteps`, `lightingDivisor` and `halfResolution`.                                                                                                                 |
-| **Quality**    | **Fine Detail** (MacCormack transport), brick size, and the velocity and smoke grid resolutions relative to `voxelSize`. Changing these restarts the simulation.                             |
+| Tab            | Settings                                                                                                                                                                                                                                                                                                                                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Simulation** | `buoyancy`, `damping` and `vorticity`, and a solid `ground`.                                                                                                                                                                                                                                                                                                                                            |
+| **Flame**      | Flame `lifespan`, the heat, smoke and expansion it produces, and `cooling`.                                                                                                                                                                                                                                                                                                                             |
+| **Smoke**      | `dissipation` and `smokeWeight` (shown as **Weight**).                                                                                                                                                                                                                                                                                                                                                  |
+| **Fuel**       | Optional combustion: fuel the flow carries, which ignites above `ignitionHeat` and burns at `burnRate`.                                                                                                                                                                                                                                                                                                 |
+| **Lighting**   | Whether flames light the scene (`illuminateScene`) and how strongly.                                                                                                                                                                                                                                                                                                                                    |
+| **Rendering**  | The flame's look (`color`, `brightness`, `opacity`, blackbody `temperature`, `sootGlow`) and the smoke's (`color`, `density`, `scattering`, `shadowDensity`).                                                                                                                                                                                                                                           |
+| **Quality**    | `voxelSize` (meters per cell), the voxel budget (`grid.maxVoxels`), the density `cutoff` below which cells are released, **Fine Detail** (MacCormack transport), brick size, the velocity and smoke grid resolutions relative to `voxelSize`, and the render settings: reconstruction `filter`, `raySteps`, `lightingDivisor` and `halfResolution`. Changing the grid settings restarts the simulation. |
 
 Smaller voxels look more detailed and cost more: halving `voxelSize` means up to eight times
 as many cells for the same volume.
@@ -212,7 +211,7 @@ and both hold the complete document:
   "version": 11,
   "id": "982969f4-67d2-447f-a379-53d4c6b23881",
   "name": "Fire tornado",
-  "scene": { "recipe": "fire-tornado", "sky": true, "floor": { "roughness": 0.58, "metalness": 0.08 } },
+  "scene": { "recipe": "fire-tornado", "sky": true },
   "camera": { "position": [10, 7, 12], "target": [0, 4.2, 0] },
   "simulation": {
     "voxelSize": 0.0703,

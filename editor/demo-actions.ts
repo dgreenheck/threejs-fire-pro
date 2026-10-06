@@ -3,10 +3,6 @@ import type { Recipe, SimulationDocument } from './document';
 /** Presentation choices belong to each demo, not to the editable simulation schema. */
 const authored: Record<Recipe, { start: string; stop: string }> = {
   empty: { start: 'Start emitters', stop: 'Stop emitters' },
-  'emitter-forces': {
-    start: 'Start flame',
-    stop: 'Stop flame',
-  },
   campfire: {
     start: 'Light campfire',
     stop: 'Extinguish',

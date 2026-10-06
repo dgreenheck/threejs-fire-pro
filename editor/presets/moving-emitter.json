@@ -5,11 +5,7 @@
   "name": "Moving sphere",
   "scene": {
     "recipe": "moving-emitter",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [8, 5, 9],
@@ -17,7 +13,8 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.043,
+    "voxelSize": 0.05,
+    "smokeDivisor": 2,
     "flame": {
       "lifespan": 1.1,
       "heatRate": 2,
@@ -26,7 +23,7 @@
       "cooling": 0.5,
       "color": "#ffffff",
       "brightness": 2,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 3000,
       "sootGlow": 1
     },
@@ -49,7 +46,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "raySteps": 256
+      "filter": "quadratic",
+      "raySteps": 128
     }
   },
   "emitters": [

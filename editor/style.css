@@ -367,6 +367,26 @@ button svg {
   align-items: center;
   gap: 12px;
 }
+.sky-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #656c7d;
+  border-radius: 6px;
+  background: transparent;
+  color: #d7dce5;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.sky-toggle:hover {
+  background: #ffffff14;
+  color: white;
+}
+.sky-toggle[aria-checked='true'] {
+  color: #f5c76b;
+}
 .choice-menu {
   display: flex;
   align-items: center;

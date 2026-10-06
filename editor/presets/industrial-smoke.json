@@ -2,28 +2,31 @@
   "format": "fire-pro",
   "version": 11,
   "id": "industrial-smoke",
-  "name": "Industrial smoke",
+  "name": "Smoke stack",
   "scene": {
     "recipe": "industrial-smoke",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [6, 4.5, 7],
     "target": [0, 2, 0]
   },
   "simulation": {
-    "brickSize": 16,
-    "voxelSize": 0.0469,
+    "brickSize": 8,
+    "voxelSize": 0.05,
+    "velocityDivisor": 1,
+    "smokeDivisor": 1,
+    "scalarMacCormack": false,
+    "grid": {
+      "maxVoxels": 1000000
+    },
     "flame": {
-      "cooling": 0.62
+      "cooling": 0.62,
+      "opacity": 1
     },
     "smoke": {
       "dissipation": 0.35,
-      "color": "#656a70",
+      "color": "#c62a1f",
       "density": 6,
       "scattering": 0.38,
       "shadowDensity": 3.5
@@ -40,7 +43,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "raySteps": 256
+      "filter": "quadratic",
+      "raySteps": 128
     }
   },
   "emitters": [

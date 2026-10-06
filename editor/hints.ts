@@ -5,9 +5,6 @@
  */
 export const HINTS: Readonly<Record<string, string>> = {
   // Scene.
-  sky: 'Turns the sky, sun and fill lights on or off.',
-  'floor.roughness': 'How rough the floor is: 0 is mirror-smooth, 1 is matte.',
-  'floor.metalness': 'How metallic the floor looks.',
 
   // Simulation.
   voxelSize: 'Size of one cell. Smaller is more detailed and slower.',
@@ -15,8 +12,9 @@ export const HINTS: Readonly<Record<string, string>> = {
   'grid.cutoff': 'Smoke, flame and fuel thinner than this stop keeping cells active.',
   'grid.ground': 'Makes everything below the floor (y = 0) solid.',
   smokeGrid:
-    'Resolution of smoke simulation and transport. Coarser cells lose detail. Changing this restarts the simulation.',
-  velocityGrid: 'Cell size for motion and pressure. Coarser uses fewer cells and loses detail. Brick size is independent.',
+    'Resolution of smoke simulation and transport. Half uses 8× fewer cells, quarter 64×, with softer detail. Restarts the simulation.',
+  velocityGrid:
+    'Resolution of motion and pressure. Flame and heat keep the voxel size. Coarser is faster and loses detail.',
   'motion.buoyancy': 'How strongly heat rises.',
   'motion.smokeWeight': 'How strongly smoke sinks.',
   'motion.damping': 'How quickly motion slows down.',
@@ -60,7 +58,8 @@ export const HINTS: Readonly<Record<string, string>> = {
   // Rendering.
   'rendering.filter': 'How smoothly cells blend. Trilinear is fastest, cubic smoothest.',
   'rendering.raySteps': 'Most samples a ray takes. More is sharper and slower.',
-  'rendering.lightingDivisor': 'Resolution of cached smoke lighting and shadows. Coarser lighting is faster and softer; flame and smoke grid sizes stay unchanged.',
+  'rendering.lightingDivisor':
+    'Resolution of smoke lighting and shadows. Quarter uses 64× fewer cells, with softer shadows. Applies without a restart.',
   'rendering.halfResolution': 'Draws the fire at half resolution: faster, slightly softer.',
 
   // Objects.

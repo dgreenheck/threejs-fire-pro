@@ -6,7 +6,7 @@ import type { SceneContext } from './types';
 
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene);
+    ground(scene);
     box(scene, [2.4, 0.25, 2.4], [0, 0.125, 0], '#3c4249', 0.35);
     box(scene, [1.4, 1.2, 1.4], [0, 0.8, 0], '#4a6671', 0.5);
     const pipe = mesh(
@@ -44,6 +44,6 @@ export const recipe = {
     for (let i = 0; i < 5; i++)
       box(scene, [0.035, 0.7, 0.02], [-0.5 + i * 0.25, 0.82, 0.711], '#20282e');
     box(scene, [0.27, 0.1, 0.02], [0.38, 1.12, 0.715], '#bda258');
-    return { objects: { pipe }, ground: floor.control };
+    return { objects: { pipe } };
   },
 };

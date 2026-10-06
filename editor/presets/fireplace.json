@@ -5,11 +5,7 @@
   "name": "Fireplace",
   "scene": {
     "recipe": "fireplace",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [5.5, 3.8, 7.5],
@@ -17,7 +13,8 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.0312,
+    "voxelSize": 0.05,
+    "smokeDivisor": 2,
     "flame": {
       "lifespan": 0.65,
       "heatRate": 3,
@@ -26,7 +23,7 @@
       "cooling": 0.62,
       "color": "#ffffff",
       "brightness": 0.9,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 3200,
       "sootGlow": 1
     },
@@ -49,7 +46,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "raySteps": 256
+      "filter": "quadratic",
+      "raySteps": 128
     }
   },
   "emitters": [

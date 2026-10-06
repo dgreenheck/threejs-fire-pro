@@ -12,15 +12,6 @@ import {
 import type { BufferGeometry, ColorRepresentation, Material, Node, Object3D } from 'three/webgpu';
 import { mix, output, positionView, positionWorld, texture, vec4 } from 'three/tsl';
 
-export interface DemoGroundOptions {
-  roughness?: number;
-  metalness?: number;
-}
-
-export interface DemoGround {
-  configure(options: DemoGroundOptions): void;
-}
-
 export function material(color: ColorRepresentation, metalness = 0, roughness = 0.8) {
   return new MeshStandardMaterial({ color, metalness, roughness });
 }
@@ -75,21 +66,7 @@ export function ground(scene: Scene, size = 500) {
     uvs.setXY(i, positions.getX(i) * 0.25, -positions.getY(i) * 0.25);
   const floor = mesh(scene, geometry, surface);
   floor.rotation.x = -Math.PI / 2;
-  const control: DemoGround = {
-    configure(options) {
-      for (const key of Object.keys(options))
-        if (!['roughness', 'metalness'].includes(key))
-          throw new Error(`Unknown floor option: ${key}.`);
-      for (const key of ['roughness', 'metalness'] as const) {
-        const value = options[key];
-        if (value === undefined) continue;
-        if (!Number.isFinite(value) || value < 0 || value > 1)
-          throw new Error(`Floor ${key} must be between 0 and 1.`);
-        surface[key] = value;
-      }
-    },
-  };
-  return { object: floor, control };
+  return floor;
 }
 
 export function cylinder(

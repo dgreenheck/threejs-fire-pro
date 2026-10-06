@@ -14,11 +14,29 @@ export function loadPreviewPreferences(): PreviewPreferences {
   }
 }
 
+/** Whether a scene makes smoke but no flame or fuel: it is only visible lit. */
+function smokeOnly(document: SimulationDocument) {
+  const amounts = document.emitters.map((e) =>
+    e.mode === 'burst'
+      ? { ...e.burst.charge }
+      : {
+          flame: e.options.emission?.flame,
+          smoke: e.options.emission?.smokeRate,
+          fuel: e.options.emission?.fuelRate,
+        },
+  );
+  return (
+    amounts.some((a) => (a.smoke ?? 0) > 0) &&
+    amounts.every((a) => !(a.flame ?? 0) && !(a.fuel ?? 0))
+  );
+}
+
 export function applyPreviewPreferences(
   document: SimulationDocument,
   preferences: PreviewPreferences,
 ) {
-  if (preferences.lights !== undefined) document.scene.sky = preferences.lights;
+  if (smokeOnly(document)) document.scene.sky = true;
+  else if (preferences.lights !== undefined) document.scene.sky = preferences.lights;
   return document;
 }
 

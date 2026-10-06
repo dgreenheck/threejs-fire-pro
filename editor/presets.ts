@@ -1,5 +1,4 @@
 import { validateDocument, type SimulationDocument } from './document';
-import emitter from './presets/emitter-forces.json';
 import campfire from './presets/campfire.json';
 import smallFlame from './presets/small-flame.json';
 import letters from './presets/flaming-letters.json';
@@ -13,7 +12,6 @@ import moving from './presets/moving-emitter.json';
 import flamethrower from './presets/flamethrower.json';
 import tornado from './presets/fire-tornado.json';
 export const presets = [
-  emitter,
   smallFlame,
   campfire,
   letters,
@@ -28,7 +26,7 @@ export const presets = [
   moving,
 ].map((value) => ({
   document: validateDocument(value),
-  image: `/thumbnails/${value.id}.${value.id === 'small-flame' ? 'svg' : 'png'}`,
+  image: `/thumbnails/${value.id}.png`,
 }));
 export function presetImage(document: SimulationDocument) {
   return (

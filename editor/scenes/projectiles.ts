@@ -4,7 +4,7 @@ import { createNozzle } from './nozzle';
 import type { SceneContext } from './types';
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene);
+    ground(scene);
     const { nozzle, muzzle } = createNozzle(scene);
     const target = box(scene, [0.3, 2.5, 2.8], [3.6, 1.25, 0], '#888d91', 1);
     for (const z of [-1.25, 1.25]) box(scene, [0.65, 0.16, 0.4], [3.6, 0.08, z], '#6f757b', 1);
@@ -16,7 +16,6 @@ export const recipe = {
     projectileMaterial.emissiveIntensity = 2;
     return {
       objects: { nozzle, muzzle, target, projectileGeometry, projectileMaterial },
-      ground: floor.control,
       dispose() {
         projectileGeometry.dispose();
         projectileMaterial.dispose();

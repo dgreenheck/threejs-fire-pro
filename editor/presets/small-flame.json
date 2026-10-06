@@ -5,11 +5,7 @@
   "name": "Small flame",
   "scene": {
     "recipe": "empty",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [0.8, 0.7, 1.1],
@@ -17,17 +13,18 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.0125,
+    "voxelSize": 0.005,
+    "smokeDivisor": 2,
     "flame": {
       "lifespan": 0.45,
       "heatRate": 5,
       "smokeRate": 0.08,
-      "expansionRate": 0.1,
+      "expansionRate": 5,
       "cooling": 0.8,
       "color": "#ffffff",
       "brightness": 2,
-      "opacity": 0.55,
-      "temperature": 3200,
+      "opacity": 1,
+      "temperature": 2500,
       "sootGlow": 0.2
     },
     "smoke": {
@@ -49,7 +46,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "raySteps": 256
+      "filter": "quadratic",
+      "raySteps": 128
     }
   },
   "emitters": [
@@ -83,8 +81,8 @@
       "name": "Gentle flicker",
       "options": {
         "type": "turbulence",
-        "strength": 0.12,
-        "scale": 12
+        "strength": 0.3,
+        "scale": 6
       },
       "targets": null
     }

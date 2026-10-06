@@ -7,7 +7,6 @@ import {
   Flame,
   Fuel,
   Lightbulb,
-  Mountain,
   SlidersHorizontal,
   Shield,
   Sparkles,
@@ -56,7 +55,7 @@ const names: Record<string, string> = {
   lift: 'Lift',
   inward: 'Inward pull',
   raySteps: 'Ray steps',
-  smokeWeight: 'Smoke weight',
+  smokeWeight: 'Weight',
   dissipation: 'Dissipation',
   expansionRate: 'Expansion',
   brightness: 'Brightness',
@@ -101,10 +100,9 @@ const resolutionNames: Record<number, string> = {
 };
 type Range = readonly [number, number];
 type SimulationGroup = 'grid' | 'flame' | 'smoke' | 'motion' | 'fuel' | 'lighting' | 'rendering';
-type Tab = 'scene' | 'simulation' | 'quality' | Exclude<SimulationGroup, 'grid'> | 'object';
+type Tab = 'simulation' | 'quality' | Exclude<SimulationGroup, 'grid' | 'motion'> | 'object';
 const simulationTabs: { id: Tab; label: string; icon: TabIcon }[] = [
   { id: 'simulation', label: 'Simulation', icon: Box },
-  { id: 'motion', label: 'Motion', icon: Wind },
   { id: 'flame', label: 'Flame', icon: Flame },
   { id: 'smoke', label: 'Smoke', icon: CloudFog },
   { id: 'fuel', label: 'Fuel', icon: Fuel },
@@ -148,14 +146,10 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
   const object = source ?? force ?? collider;
   const kind = source ? 'Emitter' : force ? 'Force' : 'Collider';
   const settings = document.simulation;
-  const [tab, setTab] = useState<Tab>(() =>
-    object ? 'object' : selected !== 'scene' ? 'simulation' : 'scene',
-  );
+  const [tab, setTab] = useState<Tab>(() => (object ? 'object' : 'simulation'));
   useEffect(() => {
     if (object) setTab('object');
-    else if (selected === 'scene') setTab('scene');
-    else
-      setTab((current) => (current === 'object' || current === 'scene' ? 'simulation' : current));
+    else setTab((current) => (current === 'object' ? 'simulation' : current));
   }, [selected, Boolean(object)]);
   const active: Tab = tab === 'object' && !object ? 'simulation' : tab;
 
@@ -163,7 +157,6 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
     for (const key of path.slice(0, -1)) target = target[key];
     target[path.at(-1)!] = value;
   };
-  const patchScene = (path: string[], value: unknown) => edit((d) => assign(d.scene, path, value));
   const patchSimulation = (path: string[], value: unknown) =>
     edit((d) => assign(d.simulation, path, value));
   const patchObject = (path: string[], value: unknown) =>
@@ -274,50 +267,16 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
   const simulationFields = (group: SimulationGroup, value: Record<string, unknown>) =>
     fields(value, [group], patchSimulation, (key) => (LIMITS[group] as Record<string, Range>)[key]);
 
-  function sceneTab() {
-    const s = document.scene;
-    const scene = (section: keyof typeof DOCUMENT_LIMITS) => (key: string) =>
-      (DOCUMENT_LIMITS[section] as Record<string, Range>)[key];
-    return (
-      <>
-        <p className="help scene-note">
-          The world around the fire. These settings don’t change the simulation.
-        </p>
-        <Section title="Lights">
-          <Toggle
-            label="Sky and sun"
-            hint={HINTS.sky}
-            value={s.sky}
-            onChange={(v) => patchScene(['sky'], v)}
-          />
-        </Section>
-        <Section title="Floor">{fields(s.floor, ['floor'], patchScene, scene('floor'))}</Section>
-      </>
-    );
-  }
-
   function simulationTab() {
     return (
       <>
-        <Section title="Grid">
-          <ScrubField
-            label="Voxel size"
-            hint={HINTS.voxelSize}
-            unit="m"
-            value={settings.voxelSize}
-            min={LIMITS.simulation.voxelSize[0]}
-            max={LIMITS.simulation.voxelSize[1]}
-            precision={0.0001}
-            onChange={(n) => patchSimulation(['voxelSize'], n)}
-            begin={begin}
-            end={end}
-          />
-          {simulationFields('grid', settings.grid)}
-          <p className="help">
-            The simulation computes cells near the emitters and the flame and smoke above the
-            cutoff, wherever they are. Past the voxel budget, the rest stays empty. The ground is
-            solid below y = 0.
-          </p>
+        <Section title="Simulation">
+          {simulationFields('motion', {
+            buoyancy: settings.motion.buoyancy,
+            damping: settings.motion.damping,
+            vorticity: settings.motion.vorticity,
+          })}
+          {simulationFields('grid', { ground: settings.grid.ground })}
         </Section>
         {!document.emitters.length && (
           <p className="empty-note">Add an emitter to bring this simulation to life.</p>
@@ -330,18 +289,7 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
     const options = settings;
     const value: Record<string, unknown> =
       group === 'fuel' && !options.fuel.enabled ? { enabled: false } : { ...options[group] };
-    return (
-      <Section title={title}>
-        {simulationFields(group, value)}
-        {group === 'fuel' && (
-          <p className="help">
-            The flow carries fuel, which burns as flame where it is hot enough: the Flame settings
-            give its heat, smoke and expansion. Stopping emission preserves existing fuel; disabling
-            fuel clears it and keeps fire and smoke.
-          </p>
-        )}
-      </Section>
-    );
+    return <Section title={title}>{simulationFields(group, value)}</Section>;
   }
 
   function flameFields(keys: readonly (keyof typeof settings.flame)[]) {
@@ -352,68 +300,62 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
   }
 
   function flameTab() {
-    const cooling = settings.flame.cooling;
-    return (
-      <Section title="Flame behavior">
-        <p className="help">
-          Fresh flame fades as it moves. Duration is its lifetime after emission, unless an emitter
-          or burning fuel replenishes it.
-        </p>
-        {flameFields(flameBehavior)}
-        <p className="help">
-          Heat drives buoyancy and fuel ignition; smoke adds to the carried smoke field. These are
-          relative amounts produced per second, varying as flame ages. Emitters can also add heat
-          and smoke directly.
-        </p>
-        <p className="help">
-          {cooling > 0
-            ? `Without new heating, heat halves in ${(Math.LN2 / cooling).toFixed(2)} s.`
-            : 'Heat decay is off: stored heat does not cool.'}{' '}
-          Higher expansion pushes gas outward more strongly; 0 turns that contribution off.
-        </p>
-        <p className="help">Flame color, brightness and opacity are in Rendering.</p>
-      </Section>
-    );
+    return <Section title="Flame">{flameFields(flameBehavior)}</Section>;
   }
 
   function renderingTab() {
     return (
       <>
-        <Section title="Flame appearance">
-          {flameFields(flameAppearance)}
-          <p className="help">
-            Color temperature changes the glow’s color. It does not heat the gas. Smoke glow
-            controls light emitted by hot smoke.
-          </p>
+        <Section title="Flame">{flameFields(flameAppearance)}</Section>
+        <Section title="Smoke">
+          {simulationFields('smoke', {
+            color: settings.smoke.color,
+            density: settings.smoke.density,
+            scattering: settings.smoke.scattering,
+            shadowDensity: settings.smoke.shadowDensity,
+          })}
         </Section>
       </>
     );
   }
 
   function qualityTab() {
+    const cell = (divisor: number) => Number((settings.voxelSize * divisor).toFixed(4));
     return (
       <>
         <Section title="Simulation quality">
+          <ScrubField
+            label="Voxel size"
+            hint={HINTS.voxelSize}
+            unit="m"
+            value={settings.voxelSize}
+            min={LIMITS.simulation.voxelSize[0]}
+            max={LIMITS.simulation.voxelSize[1]}
+            precision={0.0001}
+            onChange={(n) => patchSimulation(['voxelSize'], n)}
+            begin={begin}
+            end={end}
+          />
+          {simulationFields('grid', {
+            maxVoxels: settings.grid.maxVoxels,
+            cutoff: settings.grid.cutoff,
+          })}
           <Toggle
             label="Fine Detail"
-            hint="Preserve fine flame and smoke detail during transport. Turn off for faster simulation with softer detail. Changing this restarts the simulation."
+            hint="Keeps fine flame and smoke detail as it moves. Off is faster and softer. Restarts the simulation."
             value={settings.scalarMacCormack}
             onChange={(value) => patchSimulation(['scalarMacCormack'], value)}
           />
           <Choice
             label="Brick size"
-            hint="Fine cells along each brick side. Independent of velocity resolution. Changing this restarts the simulation."
+            hint="Cells along each brick side. Smaller bricks fit sparse detail more tightly; larger ones need fewer allocations. Restarts the simulation."
             value={String(settings.brickSize)}
             options={['8', '16', '32']}
             onChange={(value) => patchSimulation(['brickSize'], Number(value))}
           />
-          <p className="help">
-            {settings.brickSize} × {settings.brickSize} × {settings.brickSize} fine cells per brick.
-            Smaller bricks follow sparse detail more closely; larger bricks need fewer allocations.
-          </p>
           <Choice
             label="Velocity grid"
-            hint={HINTS.velocityGrid}
+            hint={`${HINTS.velocityGrid} Now ${cell(settings.velocityDivisor)} m cells.`}
             value={resolutionNames[settings.velocityDivisor]}
             options={Object.values(resolutionNames)}
             onChange={(label) =>
@@ -427,14 +369,9 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
               )
             }
           />
-          <p className="help">
-            Velocity and pressure use{' '}
-            {Number((settings.voxelSize * settings.velocityDivisor).toFixed(4))} m cells. Flame and
-            heat keep the voxel size. Coarser motion uses fewer cells but loses detail. Brick size stays unchanged.
-          </p>
           <Choice
             label="Smoke grid"
-            hint={HINTS.smokeGrid}
+            hint={`${HINTS.smokeGrid} Now ${cell(settings.smokeDivisor)} m cells.`}
             value={resolutionNames[settings.smokeDivisor]}
             options={Object.values(resolutionNames)}
             onChange={(label) =>
@@ -448,12 +385,6 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
               )
             }
           />
-          <p className="help">
-            Smoke is simulated and transported in{' '}
-            {Number((settings.voxelSize * settings.smokeDivisor).toFixed(4))} m cells. Half uses 8×
-            fewer smoke cells; quarter uses 64× fewer, with softer detail. Changing this restarts
-            the simulation.
-          </p>
         </Section>
         <Section title="Render quality">
           {simulationFields('rendering', {
@@ -469,15 +400,13 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
               patchSimulation(
                 ['rendering', 'lightingDivisor'],
                 Number(
-                  Object.keys(resolutionNames).find((key) => resolutionNames[Number(key)] === label),
+                  Object.keys(resolutionNames).find(
+                    (key) => resolutionNames[Number(key)] === label,
+                  ),
                 ),
               )
             }
           />
-          <p className="help">
-            Quarter resolution uses 64× fewer interior lighting cells, with softer shadows.
-            Changes apply immediately without restarting the simulation.
-          </p>
           <Choice
             label="Render resolution"
             hint={HINTS['rendering.halfResolution']}
@@ -487,11 +416,6 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
               patchSimulation(['rendering', 'halfResolution'], label === 'Half resolution')
             }
           />
-          <p className="help">
-            Trilinear is fastest; quadratic and cubic smooth the grid. Ray steps limits samples per
-            ray. Half resolution renders the volume at half width and height for a faster, softer
-            image.
-          </p>
         </Section>
       </>
     );
@@ -858,7 +782,6 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
 
   const objectIcon = source ? Sparkles : force ? Wind : Shield;
   const tabs: { id: Tab; label: string; icon: TabIcon }[] = [
-    { id: 'scene', label: 'Scene', icon: Mountain },
     ...simulationTabs,
     ...(object ? [{ id: 'object' as Tab, label: kind, icon: objectIcon }] : []),
   ];
@@ -908,11 +831,14 @@ export function Inspector({ document, selected, edit, select, begin, end, trigge
           </header>
         )}
         <div className="inspector-scroll">
-          {active === 'scene' && sceneTab()}
           {active === 'simulation' && simulationTab()}
-          {active === 'motion' && groupTab('motion', 'Motion')}
           {active === 'flame' && flameTab()}
-          {active === 'smoke' && groupTab('smoke', 'Smoke')}
+          {active === 'smoke' && (
+            <Section title="Smoke">
+              {simulationFields('smoke', { dissipation: settings.smoke.dissipation })}
+              {simulationFields('motion', { smokeWeight: settings.motion.smokeWeight })}
+            </Section>
+          )}
           {active === 'fuel' && groupTab('fuel', 'Fuel')}
           {active === 'lighting' && groupTab('lighting', 'Lighting')}
           {active === 'rendering' && renderingTab()}

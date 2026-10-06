@@ -4,7 +4,7 @@ import type { SceneContext } from './types';
 
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene);
+    ground(scene);
     const assets = sceneAssets(scene);
     const rocks = [];
     for (let i = 0; i < 8; i++) {
@@ -21,6 +21,6 @@ export const recipe = {
       log.rotation.set(0.08, i * 1.26, 0.05);
       scene.add(log);
     }
-    return { objects: { rocks }, ground: floor.control };
+    return { objects: { rocks } };
   },
 };

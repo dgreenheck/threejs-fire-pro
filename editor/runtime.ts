@@ -88,7 +88,7 @@ export class SimulationRuntime {
   private document: SimulationDocument;
   private selected = '';
   private transformMode: 'translate' | 'rotate' | null = null;
-  private gizmosVisible = true;
+  private gizmosVisible = false;
   private bricksVisible = false;
   private field: DebugField = 'beauty';
   private forceGuide?: THREE.ArrowHelper;
@@ -244,7 +244,6 @@ export class SimulationRuntime {
         this.fill.intensity = document.scene.sky ? 1.5 : 0;
         this.ambient.intensity = document.scene.sky ? 0.7 : 0;
         this.scene.environmentIntensity = Number(document.scene.sky);
-        this.setup.ground.configure(document.scene.floor);
         let live = this.live;
         const structural = this.structural(document);
         if (!live || live.structural !== structural) {

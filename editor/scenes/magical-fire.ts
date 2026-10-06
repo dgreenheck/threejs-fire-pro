@@ -5,7 +5,7 @@ import type { SceneContext } from './types';
 
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene);
+    ground(scene);
     cylinder(scene, 1.15, 0.18, [0, 0.09, 0], '#41404e', 0.4);
     cylinder(scene, 0.73, 0.55, [0, 0.45, 0], '#353342', 0.5);
     cylinder(scene, 0.95, 0.12, [0, 0.78, 0], '#676071', 0.6);
@@ -20,6 +20,6 @@ export const recipe = {
       ]);
       crystal.rotation.y = angle;
     }
-    return { objects: {}, ground: floor.control };
+    return { objects: {} };
   },
 };

@@ -5,11 +5,7 @@
   "name": "Campfire",
   "scene": {
     "recipe": "campfire",
-    "sky": false,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": false
   },
   "camera": {
     "position": [-4.119369112443089, 1.9640251533931754, 5.301453501488493],
@@ -17,13 +13,13 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.0099,
+    "voxelSize": 0.05,
     "velocityDivisor": 2,
-    "smokeDivisor": 1,
+    "smokeDivisor": 2,
     "seed": 1,
     "grid": {
       "maxVoxels": 8000000,
-      "cutoff": 0.1,
+      "cutoff": 0.05,
       "ground": true
     },
     "flame": {
@@ -34,7 +30,7 @@
       "cooling": 0.62,
       "color": "#ffffff",
       "brightness": 0.9,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 3200,
       "sootGlow": 1
     },
@@ -62,8 +58,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "filter": "trilinear",
-      "raySteps": 192,
+      "filter": "quadratic",
+      "raySteps": 128,
       "halfResolution": true
     }
   },
@@ -80,7 +76,7 @@
         "active": true,
         "emission": {
           "flame": 1,
-          "heatRate": 28.99,
+          "heatRate": 10,
           "smokeRate": 0,
           "fuelRate": 0
         },

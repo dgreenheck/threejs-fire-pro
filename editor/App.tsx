@@ -24,6 +24,8 @@ import {
   Boxes,
   Eye,
   EyeOff,
+  Lightbulb,
+  LightbulbOff,
 } from 'lucide-react';
 import {
   cloneDocument,
@@ -108,7 +110,7 @@ export function App() {
   const [retry, setRetry] = useState(0);
   const [loading, setLoading] = useState(false),
     [mode, setMode] = useState<'translate' | 'rotate' | null>(null),
-    [gizmosVisible, setGizmosVisible] = useState(true),
+    [gizmosVisible, setGizmosVisible] = useState(false),
     [bricksVisible, setBricksVisible] = useState(false),
     [field, setField] = useState<DebugField>('beauty'),
     [gesture, setGesture] = useState(false),
@@ -780,6 +782,21 @@ export function App() {
                           />
                         </div>
                         <div className="preview-settings">
+                          <button
+                            className="sky-toggle"
+                            role="switch"
+                            aria-checked={document.scene.sky}
+                            aria-label="Lights"
+                            title="Turns the sky, sun and fill lights on or off."
+                            onClick={() => commit((d) => void (d.scene.sky = !d.scene.sky))}
+                          >
+                            {document.scene.sky ? (
+                              <Lightbulb size={15} />
+                            ) : (
+                              <LightbulbOff size={15} />
+                            )}
+                            <span>{document.scene.sky ? 'Lights On' : 'Lights Off'}</span>
+                          </button>
                           <ChoiceMenu
                             label="View"
                             value={field}

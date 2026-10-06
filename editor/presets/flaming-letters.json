@@ -5,8 +5,7 @@
   "name": "Flaming letters",
   "scene": {
     "recipe": "flaming-letters",
-    "sky": false,
-    "floor": { "roughness": 0.58, "metalness": 0.08 }
+    "sky": false
   },
   "camera": {
     "position": [-3.4020459353289185, 2.238886194509217, 6.731519154431152],
@@ -14,7 +13,7 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.02,
+    "voxelSize": 0.05,
     "velocityDivisor": 2,
     "smokeDivisor": 2,
     "seed": 1,
@@ -42,7 +41,7 @@
     "fuel": { "enabled": false, "ignitionHeat": 0.5, "burnRate": 4 },
     "lighting": { "illuminateScene": true, "intensity": 1 },
     "rendering": {
-      "lightingDivisor": 4, "filter": "trilinear", "raySteps": 256, "halfResolution": true }
+      "lightingDivisor": 4, "filter": "quadratic", "raySteps": 128, "halfResolution": true }
   },
   "emitters": [
     {

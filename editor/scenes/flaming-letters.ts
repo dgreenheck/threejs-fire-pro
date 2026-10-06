@@ -6,13 +6,13 @@ import type { SceneContext } from './types';
 
 export const recipe = {
   buildScene({ scene }: SceneContext) {
-    const floor = ground(scene);
+    ground(scene);
     const letters = mesh(
       scene,
       createLetterGeometry(),
       sceneAssets(scene).surface('metal'),
       [0, 0, 0],
     );
-    return { objects: { letters }, ground: floor.control };
+    return { objects: { letters } };
   },
 };

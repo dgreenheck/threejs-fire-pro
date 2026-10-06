@@ -14,7 +14,6 @@ import {
 
 export const RECIPES = [
   'empty',
-  'emitter-forces',
   'flaming-letters',
   'fireplace',
   'campfire',
@@ -65,7 +64,6 @@ export interface SimulationDocument {
   scene: {
     recipe: Recipe;
     sky: boolean;
-    floor: { roughness: number; metalness: number };
   };
   camera: { position: Vec3; target: Vec3 };
   simulation: ResolvedSimulationOptions;
@@ -133,7 +131,6 @@ export function newDocument(): SimulationDocument {
     scene: {
       recipe: 'empty',
       sky: false,
-      floor: { roughness: 0.58, metalness: 0.08 },
     },
     camera: { position: [6, 4.5, 7], target: [0, 1.7, 0] },
     simulation: resolveSimulation(),
@@ -149,7 +146,6 @@ function object(v: unknown, path: string, allowed: string[]): asserts v is Recor
 }
 /** Ranges of document fields that the library API does not validate itself. */
 export const DOCUMENT_LIMITS = {
-  floor: { roughness: [0, 1], metalness: [0, 1] },
   emitter: { size: [0.01, 16] },
 } as const;
 function num(v: unknown, path: string, min = -1e5, max = 1e5): asserts v is number {
@@ -201,13 +197,10 @@ export function validateDocument(input: unknown): SimulationDocument {
     ids.add(v.id);
   };
   identity(input, 'Simulation');
-  object(input.scene, 'scene', ['recipe', 'sky', 'floor']);
+  object(input.scene, 'scene', ['recipe', 'sky']);
   const s = input.scene;
   if (!RECIPES.includes(s.recipe)) throw Error('scene.recipe: unknown built-in scene.');
   bool(s.sky, 'scene.sky');
-  object(s.floor, 'floor', ['roughness', 'metalness']);
-  num(s.floor.roughness, 'floor.roughness', ...DOCUMENT_LIMITS.floor.roughness);
-  num(s.floor.metalness, 'floor.metalness', ...DOCUMENT_LIMITS.floor.metalness);
   object(input.camera, 'camera', ['position', 'target']);
   vec(input.camera.position, 'camera.position');
   vec(input.camera.target, 'camera.target');

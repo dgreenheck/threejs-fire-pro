@@ -5,11 +5,7 @@
   "name": "Delayed ignition",
   "scene": {
     "recipe": "delayed-ignition",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [5.5, 4, 7],
@@ -17,7 +13,8 @@
   },
   "simulation": {
     "brickSize": 16,
-    "voxelSize": 0.0391,
+    "voxelSize": 0.05,
+    "smokeDivisor": 2,
     "flame": {
       "lifespan": 1.2,
       "heatRate": 4,
@@ -26,7 +23,7 @@
       "cooling": 0.62,
       "color": "#ffffff",
       "brightness": 1.4,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 3200,
       "sootGlow": 1
     },
@@ -49,7 +46,8 @@
     },
     "rendering": {
       "lightingDivisor": 4,
-      "raySteps": 256
+      "filter": "quadratic",
+      "raySteps": 128
     }
   },
   "emitters": [
