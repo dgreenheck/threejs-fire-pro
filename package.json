@@ -11,8 +11,17 @@
   ],
   "author": "Daniel Greenheck",
   "license": "MIT",
-  "private": true,
+  "homepage": "https://dgreenheck.github.io/threejs-fire-pro/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgreenheck/threejs-fire-pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dgreenheck/threejs-fire-pro/issues"
+  },
   "type": "module",
+  "main": "./dist-lib/threejs-fire-pro.js",
+  "types": "./dist-lib/types/index.d.ts",
   "scripts": {
     "predev": "npm run build:runtime",
     "dev": "vite --host 127.0.0.1",
