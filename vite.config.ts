@@ -9,6 +9,8 @@ const examples = readdirSync('examples', { withFileTypes: true })
   .map((entry) => resolve('examples', entry.name, 'index.html'));
 
 export default defineConfig({
+  // GitHub Pages serves the editor from /threejs-fire-pro/ (.github/workflows/pages.yml).
+  base: process.env.BASE_PATH ?? '/',
   optimizeDeps: { include: ['three', 'three/webgpu', 'three/tsl'] },
   plugins: [
     react(),

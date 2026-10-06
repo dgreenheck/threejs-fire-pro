@@ -20,7 +20,7 @@ scene.background = new THREE.Color(0x15161a);
 scene.add(new THREE.HemisphereLight(0xc5d5e6, 0x32313b, 0.5));
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(40, 40).rotateX(-Math.PI / 2),
-  new THREE.MeshStandardMaterial({ color: 0x55585c, ...config.scene.floor }),
+  new THREE.MeshStandardMaterial({ color: 0x55585c, roughness: 0.58, metalness: 0.08 }),
 );
 scene.add(floor);
 

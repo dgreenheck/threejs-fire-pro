@@ -5,21 +5,17 @@
   "name": "Fire tornado",
   "scene": {
     "recipe": "fire-tornado",
-    "sky": true,
-    "floor": {
-      "roughness": 0.58,
-      "metalness": 0.08
-    }
+    "sky": true
   },
   "camera": {
     "position": [10, 7, 12],
     "target": [0, 4.2, 0]
   },
   "simulation": {
-    "voxelSize": 0.0703,
+    "voxelSize": 0.05,
     "brickSize": 16,
     "velocityDivisor": 2,
-    "smokeDivisor": 1,
+    "smokeDivisor": 2,
     "scalarMacCormack": true,
     "seed": 1,
     "grid": {
@@ -35,7 +31,7 @@
       "cooling": 0.3,
       "color": "#ffffff",
       "brightness": 1.6,
-      "opacity": 0.55,
+      "opacity": 1,
       "temperature": 2600,
       "sootGlow": 1
     },
@@ -62,8 +58,8 @@
       "intensity": 2
     },
     "rendering": {
-      "filter": "cubic",
-      "raySteps": 256,
+      "filter": "quadratic",
+      "raySteps": 128,
       "halfResolution": true,
       "lightingDivisor": 4
     }

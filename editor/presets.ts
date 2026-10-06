@@ -26,7 +26,7 @@ export const presets = [
   moving,
 ].map((value) => ({
   document: validateDocument(value),
-  image: `/thumbnails/${value.id}.png`,
+  image: `${import.meta.env.BASE_URL}thumbnails/${value.id}.png`,
 }));
 export function presetImage(document: SimulationDocument) {
   return (

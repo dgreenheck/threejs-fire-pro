@@ -6,6 +6,9 @@ and rendered on the GPU with WebGPU. Fire Pro has two parts: a library you can d
 
 ![A campfire simulated and rendered with Fire Pro](docs/images/hero.png)
 
+**[Open the editor in your browser](https://dgreenheck.github.io/threejs-fire-pro/)** (needs
+WebGPU).
+
 ## Contents
 
 - [Features](#features)
@@ -57,7 +60,8 @@ npm install
 npm run dev
 ```
 
-Open the printed URL (by default <http://127.0.0.1:5173>). `npm run dev` first builds the
+Open the printed URL (by default <http://127.0.0.1:5173>), or use the
+[hosted editor](https://dgreenheck.github.io/threejs-fire-pro/). `npm run dev` first builds the
 standalone runtime that the editor's **Full app** export bundles.
 
 ![The Fire Pro editor showing the Campfire preset](docs/images/editor.png)
@@ -76,7 +80,9 @@ preset list, **Import** opens an exported ZIP, `simulation.js` or `simulation.js
 **Export code** downloads it (see [Exporting](#exporting)).
 
 To make a production build of the editor and the example, run `npm run build`; the output
-goes to `dist/`.
+goes to `dist/`. Set `BASE_PATH` to serve it from a subfolder. Every push to `main` builds the
+editor with `BASE_PATH=/threejs-fire-pro/` and deploys it to GitHub Pages
+([`.github/workflows/pages.yml`](.github/workflows/pages.yml)).
 
 ## How a simulation is set up
 
@@ -99,9 +105,10 @@ Simulation document
 The scene is the world around the effect. Each built-in preset has its own scene (a campfire
 ring, a fireplace, a flamethrower nozzle, …), and **New simulation** starts with an empty floor.
 The **Lights** button at the top right of the viewport turns the sky, sun and fill lights on or
-off; the editor remembers your choice, except that smoke-only presets always open lit. Lights
-don't change the simulation; they only change what it is shown against. Some built-in scenes also add behavior, like the flamethrower's sweeping
-nozzle or the projectile launcher, and their props act as colliders.
+off. The editor remembers your choice, except that smoke-only presets always open lit. Lights
+don't change the simulation; they only change what it is shown against. Some built-in scenes
+also add behavior, like the flamethrower's sweeping nozzle or the projectile launcher, and
+their props act as colliders.
 
 ### Simulation settings
 
@@ -122,8 +129,6 @@ as many cells for the same volume.
 
 ### Emitters
 
-![An emitter selected in the editor](docs/images/emitter.png)
-
 Emitters add flame, heat, smoke and fuel to the simulation. Each emitter has a position and
 rotation, which you can set in the inspector or with the viewport gizmos, and a **mode**:
 
@@ -140,8 +145,6 @@ rotation, which you can set in the inspector or with the viewport gizmos, and a 
   viewport toolbar, or the button in the emitter's **Burst** section, to trigger one.
 
 ### Forces
-
-![A vortex force selected in the editor](docs/images/force.png)
 
 Forces accelerate the flow. Add them from the hierarchy's **+** menu:
 
@@ -165,7 +168,7 @@ colliders (see [Library API](#library-api)).
 ### Debug views and performance
 
 The **View** menu in the viewport toolbar replaces the final image with one simulation field:
-flame lifetime, heat, smoke, velocity, flame, fuel, vorticity, expansion, pressure or divergence,
+smoke, heat, flame lifetime, flame glow, fuel, velocity, vorticity, expansion, pressure or divergence,
 with a color legend. **Simulation bricks** outlines the parts of the grid the solver is
 computing. The performance overlay in the viewport shows the frame rate, active voxels against
 the budget and estimated GPU memory, and can expand into per-pass GPU timings.
@@ -173,8 +176,6 @@ the budget and estimated GPU memory, and can expand into per-pass GPU timings.
 ## Exporting
 
 Click **Export code** to take an effect out of the editor. There are three formats.
-
-![The export dialog](docs/images/export.png)
 
 ### Full app
 
@@ -214,10 +215,10 @@ and both hold the complete document:
   "scene": { "recipe": "fire-tornado", "sky": true },
   "camera": { "position": [10, 7, 12], "target": [0, 4.2, 0] },
   "simulation": {
-    "voxelSize": 0.0703,
+    "voxelSize": 0.05,
     "brickSize": 16,
     "velocityDivisor": 2,
-    "smokeDivisor": 1,
+    "smokeDivisor": 2,
     "scalarMacCormack": true,
     "seed": 1,
     "grid": { "maxVoxels": 8000000, "cutoff": 0.05, "ground": true },
@@ -226,7 +227,7 @@ and both hold the complete document:
     "motion": { "buoyancy": 1.8, "smokeWeight": 0.12, "damping": 0.12, "vorticity": 4.2 },
     "fuel": { "enabled": false, "ignitionHeat": 0.5, "burnRate": 4 },
     "lighting": { "illuminateScene": true, "intensity": 2 },
-    "rendering": { "filter": "cubic", "raySteps": 256, "halfResolution": true, "lightingDivisor": 4 }
+    "rendering": { "filter": "quadratic", "raySteps": 128, "halfResolution": true, "lightingDivisor": 4 }
   },
   "emitters": [
     {

@@ -160,7 +160,7 @@ export const htmlSource = `<!doctype html>
 </html>
 `;
 export async function exportApplication(document: SimulationDocument) {
-  const response = await fetch('/export-runtime/runtime.js');
+  const response = await fetch(`${import.meta.env.BASE_URL}export-runtime/runtime.js`);
   if (!response.ok)
     throw Error('Export runtime is unavailable. Rebuild the application and try again.');
   const notices = await import('../THIRD_PARTY_NOTICES.md?raw');
