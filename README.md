@@ -4,7 +4,7 @@ Real-time volumetric fire, smoke and explosions for [Three.js](https://threejs.o
 and rendered on the GPU with WebGPU. Fire Pro has two parts: a library you can drop into any
 `WebGPURenderer` scene, and a visual editor for designing effects and exporting them.
 
-![Fire tornado in the Fire Pro editor](docs/images/hero.png)
+![A campfire simulated and rendered with Fire Pro](docs/images/hero.png)
 
 ## Contents
 
