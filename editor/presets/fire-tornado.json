@@ -1,0 +1,155 @@
+{
+  "format": "fire-pro",
+  "version": 11,
+  "id": "fire-tornado",
+  "name": "Fire tornado",
+  "scene": {
+    "recipe": "fire-tornado",
+    "sky": true,
+    "floor": {
+      "roughness": 0.58,
+      "metalness": 0.08
+    }
+  },
+  "camera": {
+    "position": [10, 7, 12],
+    "target": [0, 4.2, 0]
+  },
+  "simulation": {
+    "brickSize": 16,
+    "voxelSize": 0.0703,
+    "flame": {
+      "lifespan": 2.8,
+      "heatRate": 8,
+      "smokeRate": 0.2,
+      "expansionRate": 0.1,
+      "cooling": 0.3,
+      "color": "#ffffff",
+      "brightness": 1.6,
+      "opacity": 0.55,
+      "temperature": 2600,
+      "sootGlow": 1
+    },
+    "smoke": {
+      "dissipation": 0.35,
+      "color": "#25292e",
+      "density": 1.2,
+      "scattering": 0.38,
+      "shadowDensity": 3.5
+    },
+    "motion": {
+      "buoyancy": 1.8,
+      "smokeWeight": 0.12,
+      "damping": 0.12,
+      "vorticity": 4.2
+    },
+    "lighting": {
+      "illuminateScene": true,
+      "intensity": 2
+    },
+    "rendering": {
+      "lightingDivisor": 4,
+      "raySteps": 256
+    }
+  },
+  "emitters": [
+    {
+      "id": "fire-tornado-source-0",
+      "name": "Ground fire 1",
+      "shape": "sphere",
+      "radius": 0.44,
+      "size": [2.1, 0.12, 2.1],
+      "position": [0.585, 0.45, 0],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": {
+          "flame": 1,
+          "heatRate": 22,
+          "smokeRate": 0.02
+        },
+        "velocity": {
+          "direction": [0, 0.65, 1],
+          "speed": 5
+        }
+      },
+      "burst": {},
+      "mode": "continuous"
+    },
+    {
+      "id": "fire-tornado-source-1",
+      "name": "Ground fire 2",
+      "shape": "sphere",
+      "radius": 0.44,
+      "size": [2.1, 0.12, 2.1],
+      "position": [-0.2925, 0.45, 0.506625],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": {
+          "flame": 1,
+          "heatRate": 22,
+          "smokeRate": 0.02
+        },
+        "velocity": {
+          "direction": [-0.8660254037844387, 0.65, -0.49999999999999983],
+          "speed": 5
+        }
+      },
+      "burst": {},
+      "mode": "continuous"
+    },
+    {
+      "id": "fire-tornado-source-2",
+      "name": "Ground fire 3",
+      "shape": "sphere",
+      "radius": 0.44,
+      "size": [2.1, 0.12, 2.1],
+      "position": [-0.2925, 0.45, -0.506625],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": {
+          "flame": 1,
+          "heatRate": 22,
+          "smokeRate": 0.02
+        },
+        "velocity": {
+          "direction": [0.8660254037844384, 0.65, -0.5000000000000004],
+          "speed": 5
+        }
+      },
+      "burst": {},
+      "mode": "continuous"
+    }
+  ],
+  "forces": [
+    {
+      "id": "fire-tornado-vortex",
+      "name": "Rotating updraft",
+      "options": {
+        "type": "vortex",
+        "active": true,
+        "strength": 16,
+        "radius": 1.35,
+        "center": [0, 0.45, 0],
+        "axis": [0, 1, 0],
+        "lift": 8.5,
+        "inward": 6
+      },
+      "targets": null
+    },
+    {
+      "id": "fire-tornado-turbulence",
+      "name": "Turbulence",
+      "options": {
+        "type": "turbulence",
+        "active": true,
+        "strength": 1.8,
+        "scale": 2.4
+      },
+      "targets": null
+    }
+  ],
+  "colliders": []
+}

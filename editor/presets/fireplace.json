@@ -1,0 +1,90 @@
+{
+  "format": "fire-pro",
+  "version": 11,
+  "id": "fireplace",
+  "name": "Fireplace",
+  "scene": {
+    "recipe": "fireplace",
+    "sky": true,
+    "floor": {
+      "roughness": 0.58,
+      "metalness": 0.08
+    }
+  },
+  "camera": {
+    "position": [5.5, 3.8, 7.5],
+    "target": [0, 1.4, 0]
+  },
+  "simulation": {
+    "brickSize": 16,
+    "voxelSize": 0.0312,
+    "flame": {
+      "lifespan": 0.65,
+      "heatRate": 3,
+      "smokeRate": 0.8,
+      "expansionRate": 0.3,
+      "cooling": 0.62,
+      "color": "#ffffff",
+      "brightness": 0.9,
+      "opacity": 0.55,
+      "temperature": 3200,
+      "sootGlow": 1
+    },
+    "smoke": {
+      "dissipation": 0.35,
+      "color": "#25292e",
+      "density": 2.5,
+      "scattering": 0.38,
+      "shadowDensity": 3.5
+    },
+    "motion": {
+      "buoyancy": 1.6,
+      "smokeWeight": 0.12,
+      "damping": 0.1,
+      "vorticity": 3.2
+    },
+    "lighting": {
+      "illuminateScene": true,
+      "intensity": 2
+    },
+    "rendering": {
+      "lightingDivisor": 4,
+      "raySteps": 256
+    }
+  },
+  "emitters": [
+    {
+      "id": "fireplace-source",
+      "name": "Fire emitter",
+      "shape": "sphere",
+      "radius": 0.48,
+      "size": [1, 1, 1],
+      "position": [0, 0.6, -0.2],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": {
+          "flame": 1,
+          "heatRate": 3,
+          "smokeRate": 0
+        },
+        "velocity": null
+      },
+      "burst": {},
+      "mode": "continuous"
+    }
+  ],
+  "forces": [
+    {
+      "id": "fireplace-turbulence",
+      "name": "Turbulence",
+      "options": {
+        "type": "turbulence",
+        "strength": 0.6,
+        "scale": 4.8
+      },
+      "targets": null
+    }
+  ],
+  "colliders": []
+}

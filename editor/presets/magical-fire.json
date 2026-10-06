@@ -1,0 +1,93 @@
+{
+  "format": "fire-pro",
+  "version": 11,
+  "id": "magical-fire",
+  "name": "Colored fire",
+  "scene": {
+    "recipe": "magical-fire",
+    "sky": true,
+    "floor": {
+      "roughness": 0.58,
+      "metalness": 0.08
+    }
+  },
+  "camera": {
+    "position": [5.5, 4.2, 7],
+    "target": [0, 1.55, 0]
+  },
+  "simulation": {
+    "brickSize": 16,
+    "voxelSize": 0.0391,
+    "flame": {
+      "lifespan": 0.8,
+      "heatRate": 3.5,
+      "smokeRate": 0.15,
+      "expansionRate": 0.7,
+      "cooling": 0.62,
+      "color": "#8c74ff",
+      "brightness": 2.4,
+      "opacity": 0.55,
+      "temperature": 3600,
+      "sootGlow": 0.8
+    },
+    "smoke": {
+      "dissipation": 0.35,
+      "color": "#656078",
+      "density": 1,
+      "scattering": 0.38,
+      "shadowDensity": 3.5
+    },
+    "motion": {
+      "buoyancy": 1.6,
+      "smokeWeight": 0.12,
+      "damping": 0.1,
+      "vorticity": 3.2
+    },
+    "lighting": {
+      "illuminateScene": true,
+      "intensity": 2
+    },
+    "rendering": {
+      "lightingDivisor": 4,
+      "raySteps": 256
+    }
+  },
+  "emitters": [
+    {
+      "id": "magical-fire-source",
+      "name": "Fire emitter",
+      "shape": "sphere",
+      "radius": 0.35,
+      "size": [1, 1, 1],
+      "position": [0, 1.05, 0],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": {
+          "flame": 1,
+          "heatRate": 1.5,
+          "smokeRate": 0
+        },
+        "velocity": {
+          "direction": [0, 1, 0],
+          "speed": 1.4
+        }
+      },
+      "burst": {},
+      "mode": "continuous"
+    }
+  ],
+  "forces": [
+    {
+      "id": "magical-fire-turbulence",
+      "name": "Turbulence",
+      "options": {
+        "type": "turbulence",
+        "strength": 0.7,
+        "scale": 5.2
+      },
+      "targets": null
+    }
+  ],
+  "colliders": []
+}

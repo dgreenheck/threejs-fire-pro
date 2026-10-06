@@ -1,0 +1,6 @@
+node_modules/
+dist/
+dist-lib/
+dist-runtime/
+artifacts/
+.DS_Store

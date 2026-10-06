@@ -1,0 +1,35 @@
+export { FireSimulation, type SimulationStats } from './library/FireSimulation.ts';
+export type { Emitter, Explosion, Force, Collider } from './library/handles.ts';
+export type {
+  DeepReadonly,
+  ColorValue,
+  Vec3,
+  SimulationOptions,
+  SimulationConfigureOptions,
+  FlameOptions,
+  SmokeOptions,
+  MotionOptions,
+  FuelOptions,
+  LightingOptions,
+  RenderingOptions,
+  ReconstructionFilter,
+  EmitterOptions,
+  EmitterPatch,
+  EmitterShape,
+  EmissionOptions,
+  VelocityOptions,
+  ExplosionOptions,
+  ForceOptions,
+  ForcePatch,
+  GridOptions,
+  ColliderOptions,
+  ColliderShape,
+  DebugOptions,
+  DebugField,
+  ResolvedSimulationOptions,
+  ResolvedEmitterOptions,
+  ResolvedExplosionOptions,
+  ResolvedForceOptions,
+} from './library/options.ts';
+
+export type { BrickSize, LightingDivisor } from './engine/types.ts';

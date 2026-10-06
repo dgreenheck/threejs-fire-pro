@@ -1,0 +1,79 @@
+{
+  "format": "fire-pro",
+  "version": 11,
+  "id": "flaming-letters",
+  "name": "Flaming letters",
+  "scene": {
+    "recipe": "flaming-letters",
+    "sky": false,
+    "floor": { "roughness": 0.58, "metalness": 0.08 }
+  },
+  "camera": {
+    "position": [-3.4020459353289185, 2.238886194509217, 6.731519154431152],
+    "target": [-0.028205872456437246, 1.449416378035124, 0.07932573217471335]
+  },
+  "simulation": {
+    "brickSize": 16,
+    "voxelSize": 0.02,
+    "velocityDivisor": 2,
+    "smokeDivisor": 2,
+    "seed": 1,
+    "grid": { "maxVoxels": 8000000, "cutoff": 0.05, "ground": true },
+    "flame": {
+      "lifespan": 0.9,
+      "heatRate": 4,
+      "smokeRate": 0.35,
+      "expansionRate": 0.8,
+      "cooling": 0.62,
+      "color": "#ffffff",
+      "brightness": 1.2,
+      "opacity": 1,
+      "temperature": 3200,
+      "sootGlow": 1
+    },
+    "smoke": {
+      "dissipation": 1,
+      "color": "#45484d",
+      "density": 1.2,
+      "scattering": 0.38,
+      "shadowDensity": 2.5
+    },
+    "motion": { "buoyancy": 1.6, "smokeWeight": 0.12, "damping": 0.1, "vorticity": 3.2 },
+    "fuel": { "enabled": false, "ignitionHeat": 0.5, "burnRate": 4 },
+    "lighting": { "illuminateScene": true, "intensity": 1 },
+    "rendering": {
+      "lightingDivisor": 4, "filter": "trilinear", "raySteps": 256, "halfResolution": true }
+  },
+  "emitters": [
+    {
+      "id": "flaming-letters-source",
+      "name": "Letters",
+      "shape": "letters",
+      "radius": 0.5,
+      "size": [1, 1, 1],
+      "position": [0, 0, 0],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": { "flame": 1, "heatRate": 1.5, "smokeRate": 0.15, "fuelRate": 0 },
+        "velocity": { "direction": [0, 1, 0], "speed": 1.6 }
+      },
+      "burst": {
+        "radius": 0.5,
+        "charge": { "flame": 1, "heat": 2, "smoke": 0, "fuel": 0 },
+        "outwardSpeed": 8,
+        "variation": { "period": 0.5, "strength": 0 }
+      },
+      "mode": "continuous"
+    }
+  ],
+  "forces": [
+    {
+      "id": "flaming-letters-turbulence",
+      "name": "Turbulence",
+      "options": { "type": "turbulence", "active": true, "strength": 0.8, "scale": 4.8 },
+      "targets": null
+    }
+  ],
+  "colliders": []
+}

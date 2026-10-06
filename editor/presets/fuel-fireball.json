@@ -1,0 +1,131 @@
+{
+  "format": "fire-pro",
+  "version": 11,
+  "id": "fuel-fireball",
+  "name": "Fireball",
+  "scene": {
+    "recipe": "fuel-fireball",
+    "sky": true,
+    "floor": {
+      "roughness": 0.58,
+      "metalness": 0.08
+    }
+  },
+  "camera": {
+    "position": [15.958918081078448, 10.092819587526966, 17.27981479948027],
+    "target": [-1.9432696295238256, 7.744762471761973, 0.6363663617029404]
+  },
+  "simulation": {
+    "brickSize": 16,
+    "voxelSize": 0.054,
+    "velocityDivisor": 2,
+    "smokeDivisor": 1,
+    "seed": 1,
+    "grid": {
+      "maxVoxels": 8000000,
+      "cutoff": 0.02,
+      "ground": true
+    },
+    "flame": {
+      "lifespan": 5,
+      "heatRate": 0.78,
+      "smokeRate": 5,
+      "expansionRate": 6.23,
+      "cooling": 0.26,
+      "color": "#ffffff",
+      "brightness": 15,
+      "opacity": 0.55,
+      "temperature": 2630,
+      "sootGlow": 5
+    },
+    "smoke": {
+      "dissipation": 0.97,
+      "color": "#303236",
+      "density": 4.5,
+      "scattering": 0.38,
+      "shadowDensity": 5.24
+    },
+    "motion": {
+      "buoyancy": 4.66,
+      "smokeWeight": 1.45,
+      "damping": 0.1,
+      "vorticity": 1.08
+    },
+    "fuel": {
+      "enabled": true,
+      "ignitionHeat": 0.4,
+      "burnRate": 6
+    },
+    "lighting": {
+      "illuminateScene": true,
+      "intensity": 1.2
+    },
+    "rendering": {
+      "lightingDivisor": 4,
+      "filter": "trilinear",
+      "raySteps": 256,
+      "halfResolution": true
+    }
+  },
+  "emitters": [
+    {
+      "id": "d9d5370a-e64e-4d57-b707-9b5796b29df1",
+      "name": "Fireball charge",
+      "shape": "sphere",
+      "radius": 0.85,
+      "size": [1, 1, 1],
+      "position": [0, 1.55, 0],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": {
+          "flame": 0,
+          "heatRate": 0,
+          "smokeRate": 0,
+          "fuelRate": 0
+        },
+        "velocity": null
+      },
+      "burst": {
+        "radius": 0.5,
+        "charge": {
+          "flame": 0,
+          "heat": 3.5,
+          "smoke": 0.1,
+          "fuel": 0.62
+        },
+        "outwardSpeed": 7,
+        "variation": {
+          "period": 0.4,
+          "strength": 0.55
+        }
+      },
+      "mode": "burst"
+    }
+  ],
+  "forces": [
+    {
+      "id": "8d94b156-5b94-4105-b938-adcd84f71de3",
+      "name": "Turbulence",
+      "options": {
+        "type": "turbulence",
+        "active": true,
+        "strength": 7.61,
+        "scale": 9.01
+      },
+      "targets": null
+    },
+    {
+      "id": "cfcfee96-216e-4f12-add3-6a591ec28a2c",
+      "name": "Turbulence",
+      "options": {
+        "type": "turbulence",
+        "active": true,
+        "strength": 2,
+        "scale": 1
+      },
+      "targets": null
+    }
+  ],
+  "colliders": []
+}

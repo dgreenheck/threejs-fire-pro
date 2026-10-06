@@ -1,0 +1,63 @@
+{
+  "name": "threejs-fire-pro",
+  "version": "0.1.0",
+  "description": "Real-time volumetric fire, smoke and explosions for Three.js WebGPU, with a visual editor.",
+  "keywords": [
+    "threejs",
+    "webgpu",
+    "fire",
+    "smoke",
+    "fluid-simulation"
+  ],
+  "author": "Daniel Greenheck",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "npm run build:runtime",
+    "dev": "vite --host 127.0.0.1",
+    "build": "npm run build:runtime && tsc --noEmit && vite build",
+    "build:runtime": "vite build --config vite.runtime.config.ts",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json",
+    "preview": "vite preview --host 127.0.0.1",
+    "format": "prettier --write src editor examples *.json *.ts",
+    "prepack": "npm run build:lib"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist-lib/types/index.d.ts",
+      "import": "./dist-lib/threejs-fire-pro.js"
+    }
+  },
+  "files": [
+    "dist-lib",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "peerDependencies": {
+    "three": "0.185.1"
+  },
+  "dependencies": {
+    "@types/three": "^0.185.4"
+  },
+  "devDependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "acorn": "^8.18.0",
+    "fflate": "^0.8.3",
+    "idb": "^8.0.3",
+    "lucide-react": "^1.46.0",
+    "motion": "^13.4.0",
+    "prettier": "^3.9.6",
+    "radix-ui": "^1.6.7",
+    "react": "^19.3.0",
+    "react-arborist": "^3.16.0",
+    "react-dom": "^19.3.0",
+    "react-resizable-panels": "^4.12.4",
+    "three": "0.185.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  }
+}

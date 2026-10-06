@@ -1,0 +1,131 @@
+{
+  "format": "fire-pro",
+  "version": 11,
+  "id": "campfire",
+  "name": "Campfire",
+  "scene": {
+    "recipe": "campfire",
+    "sky": false,
+    "floor": {
+      "roughness": 0.58,
+      "metalness": 0.08
+    }
+  },
+  "camera": {
+    "position": [-4.119369112443089, 1.9640251533931754, 5.301453501488493],
+    "target": [0, 1.25, 0]
+  },
+  "simulation": {
+    "brickSize": 16,
+    "voxelSize": 0.0099,
+    "velocityDivisor": 2,
+    "smokeDivisor": 1,
+    "seed": 1,
+    "grid": {
+      "maxVoxels": 8000000,
+      "cutoff": 0.1,
+      "ground": true
+    },
+    "flame": {
+      "lifespan": 0.65,
+      "heatRate": 3,
+      "smokeRate": 1.2,
+      "expansionRate": 0.3,
+      "cooling": 0.62,
+      "color": "#ffffff",
+      "brightness": 0.9,
+      "opacity": 0.55,
+      "temperature": 3200,
+      "sootGlow": 1
+    },
+    "smoke": {
+      "dissipation": 0.94,
+      "color": "#25292e",
+      "density": 7.11,
+      "scattering": 0.38,
+      "shadowDensity": 3.5
+    },
+    "motion": {
+      "buoyancy": 4.7,
+      "smokeWeight": 0.12,
+      "damping": 0.1,
+      "vorticity": 3.2
+    },
+    "fuel": {
+      "enabled": false,
+      "ignitionHeat": 0.5,
+      "burnRate": 4
+    },
+    "lighting": {
+      "illuminateScene": true,
+      "intensity": 12.27
+    },
+    "rendering": {
+      "lightingDivisor": 4,
+      "filter": "trilinear",
+      "raySteps": 192,
+      "halfResolution": true
+    }
+  },
+  "emitters": [
+    {
+      "id": "9adca871-5809-49a6-ae42-f04e88add840",
+      "name": "Fire emitter",
+      "shape": "disk",
+      "radius": 0.8,
+      "size": [1, 1, 1],
+      "position": [0, 0.27, 0],
+      "rotation": [0, 0, 0],
+      "options": {
+        "active": true,
+        "emission": {
+          "flame": 1,
+          "heatRate": 28.99,
+          "smokeRate": 0,
+          "fuelRate": 0
+        },
+        "velocity": null
+      },
+      "burst": {
+        "radius": 0.5,
+        "charge": {
+          "flame": 1,
+          "heat": 2,
+          "smoke": 0,
+          "fuel": 0
+        },
+        "outwardSpeed": 8,
+        "variation": {
+          "period": 0.5,
+          "strength": 0
+        }
+      },
+      "mode": "continuous"
+    }
+  ],
+  "forces": [
+    {
+      "id": "e2e55dab-b316-4589-9871-4330fe2e8f5f",
+      "name": "Wind",
+      "options": {
+        "type": "wind",
+        "active": true,
+        "direction": [1, 0, 0],
+        "strength": 0.16
+      },
+      "targets": null
+    },
+    {
+      "id": "6a6facb8-f4db-461f-b0bb-10c140b9884b",
+      "name": "Turbulence",
+      "options": {
+        "type": "turbulence",
+        "active": true,
+        "strength": 0.8,
+        "scale": 4.6
+      },
+      "targets": null
+    }
+  ],
+  "colliders": []
+}
